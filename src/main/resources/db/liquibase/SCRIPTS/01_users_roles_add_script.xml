@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="20241027-4" author="Knyazeva_VA" context="Netology">
+        <sql endDelimiter="\n/\s*\n|\n/\s*$">
+            <![CDATA[
+            SET SCHEMA '${SCHEMA}';
+            INSERT INTO roles (role_name)
+                    VALUES ('ROLE_ADMIN'),('ROLE_USER');
+
+            INSERT INTO users(email, password, name, role_id)
+                VALUES ('ivanivanov@gmail.com', '123qwerty', 'Ivan', (select id from roles where role_name='ROLE_ADMIN')),
+                        ('annapetrova@gmail.com', '456qwerty', 'Anna', (select id from roles where role_name='ROLE_USER'));
+            ]]>
+        </sql>
+        <rollback/>
+    </changeSet>
+
+
+</databaseChangeLog>
